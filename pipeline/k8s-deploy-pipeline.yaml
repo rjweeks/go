@@ -1,0 +1,31 @@
+---
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: zlabjp/kubernetes-resource
+    tag: "1.13"
+
+resources:
+- name: concourse-testing-repo
+  type: git
+  source:
+    uri: https://github.com/rjweeks/go.git
+
+- name: kubernetes-testing
+  type: kubernetes
+  source:
+    server: ((kubernetes-server))
+    namespace: ((kubernetes-namespace))
+    token: ((kubernetes-token))
+#    certificate_authority: ((kubernetes-certificate))
+    insecure_skip_tls_verify: true
+jobs:
+- name: backing-service-deploys
+  plan:
+  - get: concourse-testing-repo
+    trigger: true
+  - put: kubernetes-testing
+    params:
+      kubectl: apply -f concourse-testing-repo/deploy/
+      wait_until_ready_selector: app=nano-1
