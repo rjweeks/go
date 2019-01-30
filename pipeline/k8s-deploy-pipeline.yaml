@@ -21,7 +21,7 @@ resources:
 #    certificate_authority: ((kubernetes-certificate))
     insecure_skip_tls_verify: true
 jobs:
-- name: backing-service-deploys
+- name: test-deploy
   plan:
   - get: concourse-testing-repo
     trigger: true
