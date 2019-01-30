@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nano-1
+spec:
+  selector:
+    matchLabels:
+      app: nano-1
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nano-1
+    spec:
+      containers:
+      - name: nano-1-1
+        image: hello 
+        imagePullPolicy: IfNotPresent
