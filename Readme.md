@@ -2,9 +2,21 @@
 
 Download official [Concourse](https://github.com/concourse/concourse-docker) Docker image.
 
-cat token | base64 --decode
+Check the official Concourse Readme for more details. Use ithis command to start:
+> docker-compose up
 
+### Login to local Concourse
 
-fly -t local login --concourse-url http://localhost:8080
+> fly -t local login --concourse-url http://localhost:8080
 
-fly -t local set-pipeline -p hello-test -c pipeline/k8s-deploy-pipeline.yaml --load-vars-from secrets
+### Setup the demo pipline
+
+> fly -t local set-pipeline -p hello-test -c pipeline/k8s-deploy-pipeline.yaml --load-vars-from secrets
+
+### Unpause the pipeline
+
+> fly -t local unpause-pipeline -p hello-test
+
+### Trigger the pipeline manually
+
+> fly -t local trigger-job -j hello-test/test-deploy
